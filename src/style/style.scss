@@ -1,0 +1,165 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: url("/src/image/background.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.container {
+  display: flex;
+  max-width: 400px;
+  height: 100%;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  text-align: center;
+  align-content: center;
+  -webkit-backdrop-filter: blur(4px) brightness(80%);
+  backdrop-filter: blur(4px) brightness(80%);
+
+  #cover {
+    margin-bottom: 1rem;
+
+    h1,
+    h2 {
+      font-family: "kaisei-tokumin" , "source-han-serif-tc", sans-serif;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    h1 {
+      margin: 1rem 5px;
+      font-size: 3rem;
+      color: #523721;
+
+      &::before {
+        content: "幻想森林";
+        position: absolute;
+        z-index: -1;
+        -webkit-text-stroke: 10px white;
+        text-stroke: 10px white;
+      }
+    }
+
+    h2 {
+      margin: 0.3rem 5px 1.2rem;
+      color: #ffea8a;
+    }
+
+    p {
+      margin: 10px 5px;
+      color: white;
+      text-shadow: black 0em 0em 0.3em;
+    }
+  }
+
+  #test {
+    padding: 15px;
+
+    p {
+      margin: 10px 5px 30px;
+      color: white;
+      text-shadow: black 0em 0em 0.3em;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+
+      input[type="radio"] {
+        display: none;
+
+        &:checked+label {
+          -webkit-filter: brightness(120%);
+          filter: brightness(120%);
+        }
+      }
+
+      label {
+        width: 100%;
+        cursor: pointer;
+        position: relative;
+        background: #523721;
+        margin: 5px;
+        padding: 15px 25px;
+        color: white;
+
+        &:hover{
+          -webkit-filter: brightness(120%);
+          filter: brightness(120%);
+        }
+
+        &::after,
+        &::before {
+          content: "✕";
+          display: block;
+          width: 12px;
+          height: 12px;
+          border-radius: 50px;
+          background: #000;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          overflow: hidden;
+          line-height: 12px;
+          margin: 0;
+          padding: 0;
+          font-size: 12px;
+          color: #523721;
+          font-weight: bold;
+          text-align: center;
+        }
+
+        &::after {
+          right: 10px;
+        }
+
+        &::before {
+          left: 10px;
+        }
+      }
+    }
+  }
+
+  #wait,
+  #result {
+    padding: 15px;
+
+    p {
+      margin: 10px 5px 30px;
+      color: white;
+      text-shadow: black 0em 0em 0.3em;
+    }
+
+    h2 {
+      margin: 0.3rem 5px 1.2rem;
+      color: #ffea8a;
+      font-family: "kaisei-tokumin" , "source-han-serif-tc", sans-serif;
+      font-size: 1.8rem;
+    }
+  }
+}
+
+button {
+  font-family: "kaisei-tokumin" , "source-han-serif-tc", sans-serif;
+  border: none;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  font-weight: bold;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  color: #523721;
+  border: #523721 solid 2px;
+  background-image: linear-gradient(30deg, #ffffd5 45.45%, #ffea8a 45.45%, #ffea8a 50%, #ffffd5 50%, #ffffd5 95.45%, #ffea8a 95.45%, #ffea8a 100%);
+  background-size: 37.43px 27.19px;
+
+  &:hover {
+    filter: brightness(95%);
+  }
+}
