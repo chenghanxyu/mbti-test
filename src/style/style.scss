@@ -49,6 +49,14 @@ html {
     h2 {
       margin: 0.3rem 5px 1.2rem;
       color: #ffea8a;
+
+      &::before {
+        content: "§ 發掘你的命定動物 §";
+        position: absolute;
+        z-index: -1;
+        -webkit-text-stroke: 8px #523721;
+        text-stroke: 8px #523721;
+      }
     }
 
     p {
@@ -160,6 +168,6 @@ button {
   background-size: 37.43px 27.19px;
 
   &:hover {
-    filter: brightness(95%);
+    filter: brightness(80%);
   }
 }
