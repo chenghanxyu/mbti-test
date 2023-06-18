@@ -30,7 +30,7 @@
 var scenarios = [
   {
     description:
-      "你走進森林，陽光透過樹葉間的縫隙灑下，令森林充滿魔幻的氛圍。突然，你在路上發現了一隻小動物，它看起來孤單無助。你會...",
+      "離開老者往前行，陽光透過樹葉間的縫隙灑下，令森林充滿魔幻的氛圍。突然，你在路上發現了一隻小動物，它看起來孤單無助。你會...",
     options: [
       { value: "E", label: "靠近觀察和與它互動，嘗試幫助它找到家" },
       { value: "I", label: "在遠處欣賞它，但不打擾它，繼續前進" }
@@ -99,10 +99,21 @@ $(document).ready(function () {
   $("#test").hide();
   $("#wait").hide();
   $("#result").hide();
-  $("#start").click(function () {
+  $("#askName").hide();
+  $("#goIntoForest").click(function () {
     $("#cover").hide();
-    $("#test").show();
-    showTest();
+    $("#askName").show();
+  });
+
+  $("#start").click(function () {
+    var answerName = $("#name").val();
+    if (answerName === "") {
+      alert("請先輸入姓名或暱稱！");
+    } else {
+      $("#askName").hide();
+      $("#test").show();
+      showTest();
+    }
   });
 });
 
@@ -309,25 +320,119 @@ function calculateResult() {
       "敏感而和諧的鹿鼠，追求藝術和美感。他們擁有豐富的情感世界和創造力，但有時也容易感到壓力和難以捉摸。"
   };
 
+  // 建立動物名稱與能力值的對應表
+  var animalAbilities = {
+    "獅子": [9, 6, 8, 5, 4],
+    "狐狸": [6, 9, 3, 8, 7],
+    "孔雀": [5, 4, 2, 7, 9],
+    "蝴蝶": [3, 7, 1, 6, 8],
+    "獨角獸": [8, 5, 6, 9, 3],
+    "貓頭鷹": [4, 8, 2, 9, 7],
+    "灰狼": [9, 7, 7, 8, 6],
+    "水鹿": [3, 6, 5, 7, 8],
+    "老鷹": [7, 9, 6, 5, 6],
+    "獵豹": [6, 9, 8, 4, 7],
+    "大象": [8, 2, 9, 6, 3],
+    "黑熊": [5, 6, 7, 3, 4],
+    "浣熊": [4, 8, 3, 6, 7],
+    "狼狗": [7, 8, 7, 5, 6],
+    "松鼠": [3, 9, 2, 6, 8],
+    "鹿鼠": [2, 7, 4, 5, 9]
+  };
+
+  // 建立動物的友好動物列表
+  var animalFriends = {
+    "獅子": "貓頭鷹",
+    "狐狸": "獨角獸",
+    "孔雀": "水鹿",
+    "蝴蝶": "灰狼",
+    "獨角獸": "狐狸",
+    "貓頭鷹": "獅子",
+    "灰狼": "蝴蝶",
+    "水鹿": "孔雀",
+    "老鷹": "狼狗",
+    "獵豹": "浣熊",
+    "大象": "鹿鼠",
+    "黑熊": "松鼠",
+    "浣熊": "獵豹",
+    "狼狗": "老鷹",
+    "松鼠": "黑熊",
+    "鹿鼠": "大象"
+  };
+
   // 顯示結果
   $("#submitBtn").hide();
   $("#scenarioContainer").hide();
   var mbtiType = result;
   var animalName = animalNames[mbtiType];
   var animalDescription = animalDescriptions[animalName];
+  var animalAbility = animalAbilities[animalName];
   var imgSrc = "/src/image/animal/" + animalName + ".png";
 
   var answerHTML = "<h2>" + animalName + "</h2>";
-  answerHTML += "<img src='" + imgSrc + "' width=200 height=200>";
+  answerHTML += "<img src='" + imgSrc + "' width=150 height=150>";
   answerHTML += "<p>" + animalDescription + "</p>";
 
   $("#content").html(answerHTML);
+
+  var animalFriend = animalFriends[animalName];
+  var friendImgSrc = "/src/image/animal/" + animalFriend + ".png";
+  var friendHTML = "<img src='" + friendImgSrc + "' width=100 height=100>";
+  friendHTML += "<p>" + animalFriend + "</p>";
+
+  $("#friend").html(friendHTML);
+
+  // 能力值的維度
+  var dimensions = ["領導能力", "敏捷性", "力量", "智慧", "靈敏度"];
+
+  // 設定雷達圖的資料
+  var data = {
+    labels: dimensions,
+    datasets: [{
+      label: "能力值",
+      data: animalAbility,
+      backgroundColor: "rgba(255, 234, 138, 0.4)",
+      borderColor: "rgba(255, 234, 138, 1)",
+      pointBackgroundColor: "rgba(255, 234, 138, 1)",
+      pointBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgba(255, 234, 138, 1)",
+      color: "rgba(255, 234, 138, 1)"
+    }]
+  };
+
+  // 設定雷達圖的選項
+  var options = {
+    scale: {
+      ticks: {
+        beginAtZero: true,
+        max: 10,
+      },
+      pointLabels: {
+        fontSize: 14,
+      },
+    },
+    legend: {
+      display: false,
+    }
+  };
+
+  Chart.defaults.color = 'rgba(255, 234, 138, 1)';
+
+  // 繪製雷達圖
+  var ctx = document.getElementById("radarChart").getContext("2d");
+  var radarChart = new Chart(ctx, {
+    type: 'radar',
+    data: data,
+    options: options
+  });
 
 
   // 在按鈕點擊後觸發的事件處理函式
   $("#shareBtn").on("click", function () {
     // 取得測驗結果
     var result = animalDescription;
+    var answerName = $("#name").val();
 
     // 建立新的 Canvas 元素
     var canvas = document.createElement("canvas");
@@ -353,11 +458,11 @@ function calculateResult() {
       ctx.shadowColor = "rgba(0,0,0,0.5)";
 
       // 繪製標題文字
-      var titleText = "你是幻想森林中的...";
-      ctx.fillText(titleText, canvas.width / 2, 200);
+      var titleText = answerName + "是...";
+      ctx.fillText(titleText, canvas.width / 2, 130);
 
       // 設定動物文字樣式
-      ctx.font = "bold 88px kaisei-tokumin";
+      ctx.font = "bold 78px kaisei-tokumin";
       ctx.fillStyle = "#523721";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -366,10 +471,32 @@ function calculateResult() {
 
       // 繪製動物文字
       var animalText = animalName;
-      ctx.fillText(animalText, canvas.width / 2, canvas.height - 580);
+      ctx.fillText(animalText, canvas.width / 2, canvas.height - 670);
+
+      // 設定友好動物標題文字樣式
+      ctx.font = "bold 40px Arial";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.shadowBlur = 5;
+      ctx.shadowColor = "rgba(0,0,0,0.5)";
+
+      // 繪製友好動物標題文字
+      ctx.fillText("友好動物", canvas.width / 2 + 180, canvas.height - 560);
+
+      // 設定友好動物文字樣式
+      ctx.font = "bold 30px Arial";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.shadowBlur = 5;
+      ctx.shadowColor = "rgba(0,0,0,0.5)";
+
+      // 繪製友好動物標題文字
+      ctx.fillText(animalFriend, canvas.width / 2 + 180, canvas.height - 340);
 
       // 設定測驗結果文字的樣式和位置
-      ctx.font = "50px Arial";
+      ctx.font = "32px Arial";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -378,11 +505,11 @@ function calculateResult() {
 
       // 設定測驗結果文字的最大寬度和行高
       var maxWidth = canvas.width - 40; // 距離邊界的空白距離
-      var lineHeight = 60;
+      var lineHeight = 42;
 
       // 定義測驗結果文字的起始位置
       var startX = canvas.width / 2;
-      var startY = canvas.height - 450;
+      var startY = canvas.height - 260;
 
       // 將測驗結果文字進行換行處理
       var words = result.split("");
@@ -409,27 +536,73 @@ function calculateResult() {
         ctx.fillText(lines[j], startX, startY + j * lineHeight);
       }
 
+      // 設定雷達圖的參數
+      var abilities = animalAbility;
+      var dimensions = ["領導能力", "敏捷性", "力量", "智慧", "靈敏度"];
+      var centerX = 230;
+      var centerY = canvas.height - 450;
+      var radius = 100;
+      var angleCount = abilities.length;
+      var angle = (Math.PI * 2) / angleCount;
+
+      // 將能力值轉換為百分比
+      var maxAbility = 10; // 最大值為 10
+      var abilitiesInPercentage = abilities.map(function (ability) {
+        return (ability / maxAbility) * 100;
+      });
+
+      // 在 canvas 上繪製雷達圖
+      ctx.beginPath();
+      for (var i = 0; i < angleCount; i++) {
+        var currentAngle = angle * i - Math.PI / 2;
+        var value = abilitiesInPercentage[i];
+        var x = centerX + Math.cos(currentAngle) * ((radius * value) / 100);
+        var y = centerY + Math.sin(currentAngle) * ((radius * value) / 100);
+
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+
+        // 繪製維度名稱標籤
+        var labelX = centerX + Math.cos(currentAngle) * (radius + 20);
+        var labelY = centerY + Math.sin(currentAngle) * (radius + 20);
+        ctx.fillStyle = "black";
+        ctx.font = "25px Arial";
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        ctx.fillText(dimensions[i], labelX, labelY);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = "rgba(255, 234, 138, 0.7)";
+      ctx.lineWidth = 5;
+      ctx.fillStyle = "rgba(255, 234, 138, 0.3)";
+      ctx.fill();
+      ctx.stroke();
+
       var imgObj = new Image();
-
       imgObj.src = imgSrc;
-
       imgObj.onload = function () {
-        ctx.drawImage(imgObj, canvas.width / 2 - 175, 280, 350, 350);
+        ctx.drawImage(imgObj, canvas.width / 2 - 175, 200, 350, 350);
 
-        // 建立圖片 URL
-        var image = canvas.toDataURL("image/png");
+        var friendimgObj = new Image();
+        friendimgObj.src = friendImgSrc;
+        friendimgObj.onload = function () {
+          ctx.drawImage(friendimgObj, 465, canvas.height - 525, 150, 150);
 
-        // 開啟新視窗
-        var newWindow = window.open("", "_blank");
+          // 建立圖片 URL
+          var image = canvas.toDataURL("image/png");
 
-        // 在新視窗中插入圖片元素
-        newWindow.document.open();
-        newWindow.document.write('<p style="text-align:center">長按圖片保存分享</p><img src="' + image + '" alt="測驗結果" style="width:100%">');
-        newWindow.document.close();
+          // 開啟新視窗
+          var newWindow = window.open("", "_blank");
 
+          // 在新視窗中插入圖片元素
+          newWindow.document.open();
+          newWindow.document.write('<p style="text-align:center">長按圖片保存分享</p><img src="' + image + '" alt="測驗結果" style="height: 100%;text-align:center;margin: 0 auto;">');
+          newWindow.document.close();
+        }
       };
-
-
     };
   });
 

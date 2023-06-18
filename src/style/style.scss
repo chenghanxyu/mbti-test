@@ -27,7 +27,7 @@ html {
 
     h1,
     h2 {
-      font-family: "kaisei-tokumin" , "source-han-serif-tc", sans-serif;
+      font-family: "kaisei-tokumin", "source-han-serif-tc", sans-serif;
       font-weight: 700;
       font-style: normal;
     }
@@ -97,7 +97,7 @@ html {
         padding: 15px 25px;
         color: white;
 
-        &:hover{
+        &:hover {
           -webkit-filter: brightness(120%);
           filter: brightness(120%);
         }
@@ -135,7 +135,8 @@ html {
   }
 
   #wait,
-  #result {
+  #result,
+  #askName {
     padding: 15px;
 
     p {
@@ -147,14 +148,38 @@ html {
     h2 {
       margin: 0.3rem 5px 1.2rem;
       color: #ffea8a;
-      font-family: "kaisei-tokumin" , "source-han-serif-tc", sans-serif;
+      font-family: "kaisei-tokumin", "source-han-serif-tc", sans-serif;
       font-size: 1.8rem;
+    }
+
+    input[type="text"]{
+      background: #523721;
+      color: #ffea8a;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      width: calc(100% - 30px);
+      outline: none;
+      text-align: center;
+    }
+
+    .chartandfriedns{
+      display: inline-flex;
+      width: 100%;
+      max-height: 200px;
+      #radarChart{
+        max-width: 50%;
+        max-height: 200px;
+      }
+      .friend{
+        width: 50%;
+      }
     }
   }
 }
 
 button {
-  font-family: "kaisei-tokumin" , "source-han-serif-tc", sans-serif;
+  font-family: "kaisei-tokumin", "source-han-serif-tc", sans-serif;
   border: none;
   font-size: 1.2rem;
   line-height: 1.2rem;

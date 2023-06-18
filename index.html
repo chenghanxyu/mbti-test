@@ -17,9 +17,14 @@
     <h1>幻想森林</h1>
     <h2>§ 發掘你的命定動物 §</h2>
     <p>幻想森林中的每一個角落都隱藏著神秘的力量，而你將是這場冒險的主角。</p>
-    <p>在這裡，你將探索並發掘自己的命定動物，成為這片森林中最璀璨的存在。</p>
+    <p>在這裡，你會探索並發掘自己的命定動物，成為這片森林中最璀璨的存在。</p>
     <p>準備好迎接這場驚奇之旅了嗎？</p>
-    <button id="start">進入森林</button>
+    <button id="goIntoForest">進入森林</button>
+  </div>
+  <div id="askName">
+    <p>剛進入森林，你就遇到了一位老者，他向你詢問你的姓名，並告誡你務必記住自己的名字，否則你將迷失在森林中...</p>
+    <input type="text" id="name" placeholder="輸入姓名或暱稱">
+    <button id="start">繼續往前走</button>
   </div>
   <div id="test">
     <div id="scenarioContainer"></div>
@@ -32,13 +37,21 @@
   </div>
   <div id="result">
     <div id="content"></div>
-    <div id="shareresult"></div>
+    <div class="chartandfriedns">
+      <canvas id="radarChart" width="250" height="250"></canvas>
+      <div class="friend">
+        <p>友好動物</p>
+        <div id="friend"></div>
+      </div>
+    </div>
+    <!-- <canvas id="radarChart" width="250" height="250"></canvas> -->
+    
     <button id="shareBtn">分享結果</button>
-    <div id="canvasContainer"></div>
   </div>
 </div>
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script  src="/src/script/main.js"></script>
 
 </body>

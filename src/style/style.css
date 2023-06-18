@@ -118,21 +118,54 @@ html {
   left: 10px;
 }
 .container #wait,
-.container #result {
+.container #result,
+.container #askName {
   padding: 15px;
 }
 .container #wait p,
-.container #result p {
+.container #result p,
+.container #askName p {
   margin: 10px 5px 30px;
   color: white;
   text-shadow: black 0em 0em 0.3em;
 }
 .container #wait h2,
-.container #result h2 {
+.container #result h2,
+.container #askName h2 {
   margin: 0.3rem 5px 1.2rem;
   color: #ffea8a;
   font-family: "kaisei-tokumin", "source-han-serif-tc", sans-serif;
   font-size: 1.8rem;
+}
+.container #wait input[type=text],
+.container #result input[type=text],
+.container #askName input[type=text] {
+  background: #523721;
+  color: #ffea8a;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  width: calc(100% - 30px);
+  outline: none;
+  text-align: center;
+}
+.container #wait .chartandfriedns,
+.container #result .chartandfriedns,
+.container #askName .chartandfriedns {
+  display: inline-flex;
+  width: 100%;
+  max-height: 200px;
+}
+.container #wait .chartandfriedns #radarChart,
+.container #result .chartandfriedns #radarChart,
+.container #askName .chartandfriedns #radarChart {
+  max-width: 50%;
+  max-height: 200px;
+}
+.container #wait .chartandfriedns .friend,
+.container #result .chartandfriedns .friend,
+.container #askName .chartandfriedns .friend {
+  width: 50%;
 }
 
 button {
